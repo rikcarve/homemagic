@@ -1,12 +1,13 @@
 package ch.carve.homemagic;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.opentracing.Traced;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.io.IOException;
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.util.List;
 
 @ApplicationScoped
@@ -19,7 +20,10 @@ public class LightService {
     @Traced
     @Retry(maxRetries = 1)
     public List<Switch> getList() {
-        return List.of(new Switch("A2", "Schreibtisch", currentStatus));
+        return List.of(
+                new Switch("B3", "Schreibtisch", currentStatus),
+                new Switch("A2", "Esszimmer", currentStatus)
+        );
     }
 
     @Traced
