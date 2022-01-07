@@ -13,4 +13,9 @@ public class IntertechnoMessageCreator implements MessageCreator {
     public String createDimmingMessage(LightSwitch lightSwitch) {
         return null;
     }
+
+    @Override
+    public String createTemperatureMessage(LightSwitch lightSwitch) {
+        return null;
+    }
 }

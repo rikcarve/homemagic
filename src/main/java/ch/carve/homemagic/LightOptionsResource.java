@@ -13,12 +13,12 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 
 @Slf4j
-@Path("/dimmable")
+@Path("/lightoptions")
 @Produces(MediaType.TEXT_HTML)
-public class DimmableResource {
+public class LightOptionsResource {
 
     @Inject
-    Template dimmable;
+    Template lightoptions;
     
     @Inject
     LightService lightService;
@@ -28,22 +28,37 @@ public class DimmableResource {
     @Path("/{id}")
     public TemplateInstance get(@PathParam("id") String id) {
         LightSwitch data = lightService.get(id);
-        return dimmable.data("item", data)
+        return lightoptions.data("item", data)
                 .data("active", "Light");
     }
 
     @POST
     @RolesAllowed("user")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Path("/{id}/set")
-    public Response toggle(@PathParam("id") String id, @FormParam("brightness") int brightness) {
+    @Path("/{id}/brightness")
+    public Response brightness(@PathParam("id") String id, @FormParam("brightness") int brightness) {
         log.info("set brightness {} for {}",  brightness, id);
         LightSwitch lightSwitch = lightService.get(id);
         lightSwitch.setBrightness(brightness);
         String msg = lightSwitch.getMessageCreator().createDimmingMessage(lightSwitch);
         UdpSender.sendMessage(msg, lightSwitch.getIp(), lightSwitch.getPort());
         return Response.status(301)
-                .location(URI.create("/dimmable/" + id))
+                .location(URI.create("/lightoptions/" + id))
+                .build();
+    }
+
+    @POST
+    @RolesAllowed("user")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Path("/{id}/temperature")
+    public Response temperature(@PathParam("id") String id, @FormParam("temperature") int temperature) {
+        log.info("set temperature {} for {}",  temperature, id);
+        LightSwitch lightSwitch = lightService.get(id);
+        lightSwitch.setColorTemperature(temperature);
+        String msg = lightSwitch.getMessageCreator().createTemperatureMessage(lightSwitch);
+        UdpSender.sendMessage(msg, lightSwitch.getIp(), lightSwitch.getPort());
+        return Response.status(301)
+                .location(URI.create("/lightoptions/" + id))
                 .build();
     }
 }

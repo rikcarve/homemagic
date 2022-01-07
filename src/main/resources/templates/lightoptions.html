@@ -1,0 +1,40 @@
+{@ ch.carve.homemagic.model.LightSwitch item}
+<!DOCTYPE html>
+{#include header.html}{/include}
+<html>
+<body>
+	{#include navigation.html}{/include}
+	<table class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th scope="col">Brightness</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="fit">
+					<form action="/lightoptions/{item.id}/brightness" method="POST" up-target=".container">
+						<input class="form-control-range" value="{item.brightness}" id="brightness" name="brightness" type="range" onchange="submit()">
+					</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<table class="table table-striped table-bordered">
+		<thead>
+		<tr>
+			<th scope="col">Color Temperature</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td class="fit">
+				<form action="/lightoptions/{item.id}/temperature" method="POST" up-target=".container">
+					<input class="form-control-range" value="{item.colorTemperature}" name="temperature" min="2700" max="6500" type="range" onchange="submit()">
+				</form>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+</body>
+</html>

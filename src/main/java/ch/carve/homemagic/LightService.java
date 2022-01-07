@@ -3,7 +3,6 @@ package ch.carve.homemagic;
 import ch.carve.homemagic.model.IntertechnoMessageCreator;
 import ch.carve.homemagic.model.LightSwitch;
 import ch.carve.homemagic.model.WizMessageCreator;
-import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.opentracing.Traced;
 
 import javax.annotation.PostConstruct;
@@ -49,14 +48,11 @@ public class LightService {
         return lights.get(id);
     }
 
-    @Traced
-    @Retry(maxRetries = 1)
     public Collection<LightSwitch> getList() {
         return lights.values();
     }
 
     @Traced
-    @Retry(maxRetries = 1)
     public void toggle(String id, String status) {
         LightSwitch lightSwitch = get(id);
         lightSwitch.setStatus(status);

@@ -22,9 +22,6 @@ public class LightResource {
     Template light;
 
     @Inject
-    Template dimmable;
-
-    @Inject
     LightService lightService;
 
     @GET
