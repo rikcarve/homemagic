@@ -1,6 +1,8 @@
 package ch.carve.homemagic;
 
+import ch.carve.homemagic.model.IntertechnoMessageCreator;
 import ch.carve.homemagic.model.LightSwitch;
+import ch.carve.homemagic.model.WizMessageCreator;
 import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.opentracing.Traced;
 
@@ -27,6 +29,7 @@ public class LightService {
                 .status("OFF")
                 .ip(ITGW)
                 .port(ITGW_PORT)
+                .messageCreator(new IntertechnoMessageCreator())
                 .build());
         lights.put("W1", LightSwitch.builder()
                 .id("W1")
@@ -38,8 +41,8 @@ public class LightService {
                 .colorTemperature(3000)
                 .isDimmable(true)
                 .isTemperature(true)
+                .messageCreator(new WizMessageCreator())
                 .build());
-
     }
 
     public LightSwitch get(String id) {
@@ -55,8 +58,10 @@ public class LightService {
     @Traced
     @Retry(maxRetries = 1)
     public void toggle(String id, String status) {
-        String message = ItGwHelper.createMessage(id, Action.valueOf(status));
-        UdpSender.sendMessage(message, ITGW, ITGW_PORT);
+        LightSwitch lightSwitch = get(id);
+        lightSwitch.setStatus(status);
+        String message = lightSwitch.getMessageCreator().createStatusMessage(lightSwitch);
+        UdpSender.sendMessage(message, lightSwitch.getIp(), lightSwitch.getPort());
     }
 
 }

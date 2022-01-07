@@ -38,7 +38,10 @@ public class DimmableResource {
     @Path("/{id}/set")
     public Response toggle(@PathParam("id") String id, @FormParam("brightness") int brightness) {
         log.info("set brightness {} for {}",  brightness, id);
-        lightService.get(id).setBrightness(brightness);
+        LightSwitch lightSwitch = lightService.get(id);
+        lightSwitch.setBrightness(brightness);
+        String msg = lightSwitch.getMessageCreator().createDimmingMessage(lightSwitch);
+        UdpSender.sendMessage(msg, lightSwitch.getIp(), lightSwitch.getPort());
         return Response.status(301)
                 .location(URI.create("/dimmable/" + id))
                 .build();

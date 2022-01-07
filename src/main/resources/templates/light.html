@@ -16,12 +16,11 @@
 			<tr>
 				<td>{item.name}</td>
 				<td class="fit" width="15%">
-					<ul class="nav nav-pills">
-						<li class="nav-item">
-							<a class="nav-link active" href="/dimmable/{item.id}">Options</a>
-						</li>
-					</ul>
-					<!-- <button type="button" class="btn btn-outline-info btn-sm">Options</button> -->
+					{#if item.isDimmable == true}
+					<form action="/dimmable/{item.id}">
+						<input class="btn btn-outline-info" value="Options" type="submit">
+					</form>
+					{/if}
 				</td>
 				<td class="fit" width="15%">
 					<form action="/light/{item.id}/toggle/{item.status}" method="POST" name="toggle-{item.id}" up-target=".container">

@@ -15,4 +15,5 @@ public class LightSwitch {
     boolean isTemperature;
     private int brightness;
     private int colorTemperature;
+    private MessageCreator messageCreator;
 }
