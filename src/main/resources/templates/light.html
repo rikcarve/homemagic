@@ -7,6 +7,7 @@
 		<thead>
 			<tr>
 				<th scope="col">Name</th>
+				<th scope="col">Options</th>
 				<th scope="col">Status</th>
 			</tr>
 		</thead>
@@ -14,9 +15,17 @@
 			{#for item in light}
 			<tr>
 				<td>{item.name}</td>
-				<td class="fit">
+				<td class="fit" width="15%">
+					<ul class="nav nav-pills">
+						<li class="nav-item">
+							<a class="nav-link active" href="/dimmable/{item.id}">Options</a>
+						</li>
+					</ul>
+					<!-- <button type="button" class="btn btn-outline-info btn-sm">Options</button> -->
+				</td>
+				<td class="fit" width="15%">
 					<form action="/light/{item.id}/toggle/{item.status}" method="POST" name="toggle-{item.id}" up-target=".container">
-						<input class="btn btn-dark btn-sm" value="{item.status}" type="submit">
+						<input class="btn btn-dark" value="{item.status}" type="submit">
 					</form>
 				</td>
 			</tr>

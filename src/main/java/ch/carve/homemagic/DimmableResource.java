@@ -11,38 +11,36 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
-import java.util.Collection;
 
 @Slf4j
-@Path("/light")
+@Path("/dimmable")
 @Produces(MediaType.TEXT_HTML)
-public class LightResource {
-
-    @Inject
-    Template light;
+public class DimmableResource {
 
     @Inject
     Template dimmable;
-
+    
     @Inject
     LightService lightService;
 
     @GET
     @RolesAllowed("user")
-    public TemplateInstance get() {
-        Collection<LightSwitch> data = lightService.getList();
-        return light.data("light", data)
+    @Path("/{id}")
+    public TemplateInstance get(@PathParam("id") String id) {
+        LightSwitch data = lightService.get(id);
+        return dimmable.data("item", data)
                 .data("active", "Light");
     }
 
     @POST
     @RolesAllowed("user")
-    @Path("/{id}/toggle/{status}")
-    public Response toggle(@PathParam("id") String id, @PathParam("status") String status) {
-        log.info("toggle {}, old status {}", id, status);
-        lightService.toggle(id, "OFF".equals(status) ? "ON" : "OFF");
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Path("/{id}/set")
+    public Response toggle(@PathParam("id") String id, @FormParam("brightness") int brightness) {
+        log.info("set brightness {} for {}",  brightness, id);
+        lightService.get(id).setBrightness(brightness);
         return Response.status(301)
-                .location(URI.create("/light"))
+                .location(URI.create("/dimmable/" + id))
                 .build();
     }
 }

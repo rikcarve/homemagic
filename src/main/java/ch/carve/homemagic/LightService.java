@@ -1,43 +1,62 @@
 package ch.carve.homemagic;
 
+import ch.carve.homemagic.model.LightSwitch;
 import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.opentracing.Traced;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 @ApplicationScoped
 public class LightService {
 
-    private static final String IGTW = "192.168.178.32";
-    private static final int IGTW_PORT = 49880;
+    private static final String ITGW = "192.168.178.32";
+    private static final int ITGW_PORT = 49880;
     private String currentStatus = "OFF";
+
+    private Map<String, LightSwitch> lights = new HashMap<>();
+
+    @PostConstruct
+    public void init() {
+        lights.put("B3", LightSwitch.builder()
+                .id("B3")
+                .name("Schreibtisch")
+                .status("OFF")
+                .ip(ITGW)
+                .port(ITGW_PORT)
+                .build());
+        lights.put("W1", LightSwitch.builder()
+                .id("W1")
+                .name("Schlafzimmer")
+                .status("OFF")
+                .ip("192.168.178.34")
+                .port(38899)
+                .brightness(100)
+                .colorTemperature(3000)
+                .isDimmable(true)
+                .isTemperature(true)
+                .build());
+
+    }
+
+    public LightSwitch get(String id) {
+        return lights.get(id);
+    }
 
     @Traced
     @Retry(maxRetries = 1)
-    public List<Switch> getList() {
-        return List.of(
-                new Switch("B3", "Schreibtisch", currentStatus),
-                new Switch("A2", "Esszimmer", currentStatus)
-        );
+    public Collection<LightSwitch> getList() {
+        return lights.values();
     }
 
     @Traced
     @Retry(maxRetries = 1)
     public void toggle(String id, String status) {
-        byte[] buffer = ItGwHelper.createMessage(id, Action.valueOf(status)).getBytes();
-        try {
-            DatagramSocket socket = new DatagramSocket();
-            DatagramPacket udpPacket = new DatagramPacket(buffer, buffer.length, InetAddress.getByName(IGTW), IGTW_PORT);
-            socket.send(udpPacket);
-            currentStatus = status;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String message = ItGwHelper.createMessage(id, Action.valueOf(status));
+        UdpSender.sendMessage(message, ITGW, ITGW_PORT);
     }
 
 }
