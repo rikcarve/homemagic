@@ -16,6 +16,7 @@
         <docker.maven.plugin.version>0.31.0</docker.maven.plugin.version>
         <docker.file>Dockerfile.jvm</docker.file>
         <docker.platform>linux/amd64</docker.platform>
+        <docker.image.name>rikcarve/homemagic</docker.image.name>
         <!-- <project.build.sourceEncoding>windows-1251</project.build.sourceEncoding> -->
     </properties>
     <dependencyManagement>
@@ -124,7 +125,7 @@
                     <!-- <registry>192.168.91.21:15000</registry> -->
                     <images>
                         <image>
-                            <name>rikcarve/${project.build.finalName}</name>
+                            <name>${docker.image.name}</name>
                             <build>
                                 <buildOptions>
                                     <platform>${docker.platform}</platform>
@@ -162,6 +163,7 @@
                         <phase>install</phase>
                         <goals>
                             <goal>build</goal>
+                            <goal>push</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -175,10 +177,8 @@
             <properties>
                 <docker.platform>linux/arm/v7</docker.platform>
                 <docker.file>Dockerfile.armv7</docker.file>
+                <docker.image.name>192.168.178.31:5000/homemagic-armv7</docker.image.name>
             </properties>
-            <build>
-                <finalName>homemagic-armv7</finalName>
-            </build>
         </profile>
         <profile>
             <id>native</id>
