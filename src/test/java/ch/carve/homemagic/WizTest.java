@@ -1,5 +1,6 @@
 package ch.carve.homemagic;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -7,6 +8,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
+@Disabled
 public class WizTest {
     @Test
     void testOnOff() throws IOException {

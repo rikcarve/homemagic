@@ -89,7 +89,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>homewizard</finalName>
+        <finalName>homemagic</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -116,15 +116,18 @@
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>0.31.0</version>
+                <version>0.38.1</version>
                 <configuration>
                     <dockerHost>${my.docker.host}</dockerHost>
                     <certPath>${my.docker.certs}</certPath>
-                    <registry>192.168.91.21:15000</registry>
+                    <!-- <registry>192.168.91.21:15000</registry> -->
                     <images>
                         <image>
                             <name>rikcarve/${project.build.finalName}</name>
                             <build>
+                                <buildOptions>
+                                    <platform>linux/arm/v7</platform>
+                                </buildOptions>
                                 <dockerFile>${docker.file}</dockerFile>
                                 <tags>
                                     <tag>${version}</tag>
@@ -136,15 +139,9 @@
                                 </labels>
                                 <assembly>
                                     <inline>
-                                        <files>
-                                            <file>
-                                                <source>target/${project.build.finalName}-runner.jar</source>
-                                                <outputDirectory>/</outputDirectory>
-                                            </file>
-                                        </files>
                                         <fileSet>
-                                            <directory>target/lib</directory>
-                                            <outputDirectory>/lib</outputDirectory>
+                                            <directory>target/quarkus-app</directory>
+                                            <outputDirectory>/quarkus-app</outputDirectory>
                                         </fileSet>
                                     </inline>
                                 </assembly>
@@ -178,7 +175,7 @@
                 <docker.file>Dockerfile.armv7</docker.file>
             </properties>
             <build>
-                <finalName>quarkus-armv7</finalName>
+                <finalName>homemagic-armv7</finalName>
             </build>
         </profile>
         <profile>
