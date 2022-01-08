@@ -4,5 +4,5 @@ RUN mkdir /deployments
 
 ENV JAVA_OPTS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 
-COPY maven/quarkus-app/* /deployments/
+COPY maven/quarkus-app /deployments/
 CMD java $JAVA_OPTS -jar /deployments/quarkus-run.jar

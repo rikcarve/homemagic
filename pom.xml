@@ -15,6 +15,7 @@
         <fabric8.maven.plugin.version>4.3.1</fabric8.maven.plugin.version>
         <docker.maven.plugin.version>0.31.0</docker.maven.plugin.version>
         <docker.file>Dockerfile.jvm</docker.file>
+        <docker.platform>linux/amd64</docker.platform>
         <!-- <project.build.sourceEncoding>windows-1251</project.build.sourceEncoding> -->
     </properties>
     <dependencyManagement>
@@ -126,7 +127,7 @@
                             <name>rikcarve/${project.build.finalName}</name>
                             <build>
                                 <buildOptions>
-                                    <platform>linux/arm/v7</platform>
+                                    <platform>${docker.platform}</platform>
                                 </buildOptions>
                                 <dockerFile>${docker.file}</dockerFile>
                                 <tags>
@@ -172,6 +173,7 @@
         <profile>
             <id>armv7</id>
             <properties>
+                <docker.platform>linux/arm/v7</docker.platform>
                 <docker.file>Dockerfile.armv7</docker.file>
             </properties>
             <build>
