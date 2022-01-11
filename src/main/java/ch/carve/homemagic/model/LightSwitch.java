@@ -15,5 +15,21 @@ public class LightSwitch {
     boolean isTemperature;
     private int brightness;
     private int colorTemperature;
-    private MessageCreator messageCreator;
+    private SwitchController controller;
+
+    public void switchPower() {
+        controller.setPower(this);
+    }
+
+    public void switchBrightness() {
+        controller.setBrightness(this);
+    }
+
+    public void switchColorTemperature() {
+        controller.setColorTemperature(this);
+    }
+
+    public void readState() {
+        controller.getState(this);
+    }
 }

@@ -40,8 +40,7 @@ public class LightOptionsResource {
         log.info("set brightness {} for {}",  brightness, id);
         LightSwitch lightSwitch = lightService.get(id);
         lightSwitch.setBrightness(brightness);
-        String msg = lightSwitch.getMessageCreator().createDimmingMessage(lightSwitch);
-        UdpSender.sendMessage(msg, lightSwitch.getIp(), lightSwitch.getPort());
+        lightSwitch.switchBrightness();
         return Response.status(301)
                 .location(URI.create("/lightoptions/" + id))
                 .build();
@@ -55,8 +54,7 @@ public class LightOptionsResource {
         log.info("set temperature {} for {}",  temperature, id);
         LightSwitch lightSwitch = lightService.get(id);
         lightSwitch.setColorTemperature(temperature);
-        String msg = lightSwitch.getMessageCreator().createTemperatureMessage(lightSwitch);
-        UdpSender.sendMessage(msg, lightSwitch.getIp(), lightSwitch.getPort());
+        lightSwitch.switchColorTemperature();
         return Response.status(301)
                 .location(URI.create("/lightoptions/" + id))
                 .build();

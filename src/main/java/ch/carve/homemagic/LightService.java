@@ -1,8 +1,6 @@
 package ch.carve.homemagic;
 
-import ch.carve.homemagic.model.IntertechnoMessageCreator;
-import ch.carve.homemagic.model.LightSwitch;
-import ch.carve.homemagic.model.WizMessageCreator;
+import ch.carve.homemagic.model.*;
 import org.eclipse.microprofile.opentracing.Traced;
 
 import javax.annotation.PostConstruct;
@@ -28,7 +26,7 @@ public class LightService {
                 .status("OFF")
                 .ip(ITGW)
                 .port(ITGW_PORT)
-                .messageCreator(new IntertechnoMessageCreator())
+                .controller(new IntertechnoController())
                 .build());
         lights.put("W1", LightSwitch.builder()
                 .id("W1")
@@ -40,7 +38,19 @@ public class LightService {
                 .colorTemperature(3000)
                 .isDimmable(true)
                 .isTemperature(true)
-                .messageCreator(new WizMessageCreator())
+                .controller(new WizController())
+                .build());
+        lights.put("Y1", LightSwitch.builder()
+                .id("Y1")
+                .name("Wohnzimmer")
+                .status("OFF")
+                .ip("192.168.178.33")
+                .port(55443)
+                .brightness(100)
+                .colorTemperature(3000)
+                .isDimmable(true)
+                .isTemperature(true)
+                .controller(new YeelightController())
                 .build());
     }
 
@@ -56,8 +66,7 @@ public class LightService {
     public void toggle(String id, String status) {
         LightSwitch lightSwitch = get(id);
         lightSwitch.setStatus(status);
-        String message = lightSwitch.getMessageCreator().createStatusMessage(lightSwitch);
-        UdpSender.sendMessage(message, lightSwitch.getIp(), lightSwitch.getPort());
+        lightSwitch.switchPower();
     }
 
 }
