@@ -181,6 +181,14 @@
             </properties>
         </profile>
         <profile>
+            <id>arm64</id>
+            <properties>
+                <docker.platform>linux/arm64</docker.platform>
+                <docker.file>Dockerfile.arm64</docker.file>
+                <docker.image.name>berry2.fritz.box:5000/homemagic-arm64</docker.image.name>
+            </properties>
+        </profile>
+        <profile>
             <id>native</id>
             <activation>
                 <property>
