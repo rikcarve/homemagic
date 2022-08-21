@@ -1,0 +1,53 @@
+version: '3.8'
+services:
+  mqtt:
+    container_name: mosquitto
+    image: eclipse-mosquitto:2.0
+    restart: unless-stopped
+    volumes:
+      - "./mosquitto-data:/mosquitto"
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    command: "mosquitto -c /mosquitto-no-auth.conf"
+
+  zigbee2mqtt:
+    container_name: zigbee2mqtt
+    restart: unless-stopped
+    image: koenkk/zigbee2mqtt
+    volumes:
+      - ./zigbee2mqtt-data:/app/data
+      - /run/udev:/run/udev:ro
+    ports:
+      - 8081:8080
+    environment:
+      - TZ=Europe/Berlin
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+
+  influxdb:
+    container_name: influxdb
+    restart: unless-stopped
+    image: influxdb:2.3.0
+    volumes:
+      - ./influxdb/data:/var/lib/influxdb2
+      - ./influxdb/config.yml:/etc/influxdb2/config.yml
+    ports:
+      - 8086:8086
+
+  telegraf_system:
+    container_name: telegraf_system
+    image: telegraf
+    restart: unless-stopped
+    environment:
+      - INFLUX_TOKEN=RGQInMG06gukM7TZiRD5oeIm4owE9ZwTz19ye1301EA7A5MTMQRiVtRHv0wQdiLYEUJzosgqCMjIlgQ7TEqPDg==
+    command: telegraf --config http://berry2:8086/api/v2/telegrafs/099b9e2dd7163000
+    
+  telegraf_temperature1:
+    container_name: telegraf_temperature1
+    image: telegraf
+    restart: unless-stopped
+    environment:
+      - INFLUX_TOKEN=LRF7ZgW9hFUgemnuxZHLz5REA62LMaJ7jMIC0pSg6wu7dSpV1b-3Jyx9_deSnS7l5gMqdFEbLni_kZwBCqUypA==
+    command: telegraf --config http://berry2:8086/api/v2/telegrafs/099bcba99e963000
+    

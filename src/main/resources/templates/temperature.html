@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{#include header.html}{/include}
+<html>
+<body>
+	{#include navigation.html}{/include}
+	<table class="charts-css column data-spacing-10 show-labels" id="my-chart">
+		<thead>
+			<tr>
+				<th scope="col">Time</th>
+				<th scope="col">Temperature</th>
+			</tr>
+		</thead>
+		<tbody>
+			{#for item in temperature}
+			<tr>
+				<th>{item.time}</th>
+				<td style="--size: calc({item.temperature}/40)">{item.temperature}</td>
+			</tr>
+			{/for}
+		</tbody>
+	</table>
+</body>
+</html>
+<style>
+#my-chart.column {
+  height: 200px;
+  max-width: 300px;
+  margin: 0 auto;
+}
+</style>
