@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,8 @@ public class TemperatureService {
     private String organisation = "039f976316bae1f4";
     private String bucket = "zigbee";
 
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm").withZone(ZoneId.systemDefault());
+
     private InfluxDBClient influxDBClient;
 
     @PostConstruct
@@ -37,7 +41,7 @@ public class TemperatureService {
         influxDBClient.close();
     }
 
-    public Set<Temperature> getLastHours(long hours) {
+    public List<Temperature> getLastHours(long hours) {
         var restriction = Restrictions.and(
                 Restrictions.column("topic").equal("zigbee2mqtt/temperature1"),
                 Restrictions.field().equal("temperature")
@@ -51,6 +55,9 @@ public class TemperatureService {
 
         List<Temperature> result = new ArrayList<>();
         return query.stream().flatMap(fluxTable -> fluxTable.getRecords().stream())
-                .map(r -> new Temperature(r.getTime(), (Double) r.getValue())).collect(Collectors.toSet());
+                .filter(r -> r.getValue() != null)
+
+                .peek(r -> System.out.println(r.getTime() + "   " + formatter.format(r.getTime()) + ": " + r.getValue()))
+                .map(r -> new Temperature(r.getTime(), formatter.format(r.getTime()), String.format("%.1f",r.getValue()))).collect(Collectors.toList());
     }
 }

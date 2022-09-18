@@ -3,7 +3,7 @@
 <html>
 <body>
 	{#include navigation.html}{/include}
-	<table class="charts-css column data-spacing-10 show-labels" id="my-chart">
+	<table class="charts-css column data-spacing-5 show-labels" id="my-chart">
 		<thead>
 			<tr>
 				<th scope="col">Time</th>
@@ -13,7 +13,7 @@
 		<tbody>
 			{#for item in temperature}
 			<tr>
-				<th>{item.time}</th>
+				<th>{item.timeString}</th>
 				<td style="--size: calc({item.temperature}/40)">{item.temperature}</td>
 			</tr>
 			{/for}
@@ -26,5 +26,6 @@
   height: 200px;
   max-width: 300px;
   margin: 0 auto;
+  --color: rgba(30, 30, 230, 0.2);;
 }
 </style>

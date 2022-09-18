@@ -9,6 +9,7 @@ import java.time.Instant;
 @AllArgsConstructor
 public class Temperature {
     private Instant time;
-    private double temperature;
+    private String timeString;
+    private String temperature;
     //private double humidity;
 }

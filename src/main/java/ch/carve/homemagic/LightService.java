@@ -52,6 +52,17 @@ public class LightService {
                 .isTemperature(true)
                 .controller(new YeelightController())
                 .build());
+        lights.put("workplaceRGB", LightSwitch.builder()
+                .id("workplaceRGB")
+                .name("Arbeitsplatz")
+                .ip("tcp://berry2:1883")
+                .status("OFF")
+                .brightness(100)
+                .colorTemperature(3000)
+                .isDimmable(false)
+                .isTemperature(false)
+                .controller(new FlairViyuController())
+                .build());
     }
 
     public LightSwitch get(String id) {

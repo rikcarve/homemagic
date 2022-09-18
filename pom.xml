@@ -75,6 +75,12 @@
             <version>${influxdb.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.eclipse.paho</groupId>
+            <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+            <version>1.2.5</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.22</version>
@@ -152,7 +158,7 @@
                                 </buildOptions>
                                 <dockerFile>${docker.file}</dockerFile>
                                 <tags>
-                                    <tag>${version}</tag>
+                                    <tag>${project.version}</tag>
                                 </tags>
                                 <ports>
                                     <port>8080</port>
