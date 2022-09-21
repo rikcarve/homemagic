@@ -27,8 +27,7 @@ public class TemperatureResource {
     @GET
     @RolesAllowed("user")
     public TemplateInstance get() {
-        List<Temperature> temps = temperatureService.getLastHours(6L);
-
+        List<Temperature> temps = temperatureService.getLastHours(24L, 4L);
         return temperature.data("temperature", temps)
                 .data("active", "Temperature");
     }

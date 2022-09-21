@@ -41,7 +41,7 @@ public class TemperatureService {
         influxDBClient.close();
     }
 
-    public List<Temperature> getLastHours(long hours) {
+    public List<Temperature> getLastHours(long hours, long interval) {
         var restriction = Restrictions.and(
                 Restrictions.column("topic").equal("zigbee2mqtt/temperature1"),
                 Restrictions.field().equal("temperature")
@@ -49,7 +49,7 @@ public class TemperatureService {
         String flux = Flux.from("zigbee")
                 .range(-hours, ChronoUnit.HOURS)
                 .filter(restriction)
-                .aggregateWindow(1L, ChronoUnit.HOURS, "max")
+                .aggregateWindow(interval, ChronoUnit.HOURS, "max")
                 .toString();
         List<FluxTable> query = influxDBClient.getQueryApi().query(flux);
 
