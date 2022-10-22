@@ -13,9 +13,18 @@ public class LightSwitch {
     private int port;
     boolean isDimmable;
     boolean isTemperature;
-    boolean isRGB;
+    boolean isColor;
+    /**
+     * Brightness in range of 0..100
+     */
     private int brightness;
+    /**
+     * Color temperature in Kelvin (2700..6500)
+     */
     private int colorTemperature;
+    /**
+     * Color hue value (0..360)
+     */
     private int colorHue;
     private SwitchController controller;
 

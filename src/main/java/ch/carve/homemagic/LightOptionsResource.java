@@ -67,7 +67,6 @@ public class LightOptionsResource {
     @Path("/{id}/color")
     public Response color(@PathParam("id") String id, @FormParam("color") int color) {
         log.info("set color {} for {}",  color, id);
-        log.info(Integer.toHexString(Color.HSBtoRGB(color / 360f, 1f, 1f)));
         LightSwitch lightSwitch = lightService.get(id);
         lightSwitch.setColorHue(color);
         lightSwitch.switchColorHue();
