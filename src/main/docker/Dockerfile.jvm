@@ -1,8 +1,7 @@
-FROM eclipse-temurin:11-jre
+FROM eclipse-temurin:17-jre
 
-RUN mkdir /deployments
 
 ENV JAVA_OPTS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 
-COPY maven/quarkus-app /deployments/
-CMD java $JAVA_OPTS -jar /deployments/quarkus-run.jar
+COPY maven/quarkus-app /opt/
+CMD java $JAVA_OPTS -jar /opt/quarkus-run.jar
