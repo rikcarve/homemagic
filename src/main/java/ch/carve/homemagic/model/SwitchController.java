@@ -4,5 +4,6 @@ public interface SwitchController {
     void setPower(LightSwitch lightSwitch);
     void setBrightness(LightSwitch lightSwitch);
     void setColorTemperature(LightSwitch lightSwitch);
+    void setColorHue(LightSwitch lightSwitch);
     void getState(LightSwitch lightSwitch);
 }

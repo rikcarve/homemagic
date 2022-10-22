@@ -11,7 +11,7 @@
         <surefire-plugin.version>2.22.1</surefire-plugin.version>
         <java.version>17</java.version>
         <maven.compiler.release>17</maven.compiler.release>
-        <quarkus.version>2.10.1.Final</quarkus.version>
+        <quarkus.version>2.13.3.Final</quarkus.version>
         <influxdb.version>6.4.0</influxdb.version>
         <fabric8.maven.plugin.version>4.3.1</fabric8.maven.plugin.version>
         <docker.file>Dockerfile.jvm</docker.file>

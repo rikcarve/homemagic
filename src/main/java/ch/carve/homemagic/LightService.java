@@ -59,7 +59,7 @@ public class LightService {
                 .status("OFF")
                 .brightness(100)
                 .colorTemperature(3000)
-                .isDimmable(false)
+                .isDimmable(true)
                 .isTemperature(false)
                 .controller(new FlairViyuController())
                 .build());

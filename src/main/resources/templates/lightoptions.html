@@ -14,7 +14,7 @@
 			<tr>
 				<td class="fit">
 					<form action="/lightoptions/{item.id}/brightness" method="POST" up-target=".container">
-						<input class="form-control-range" value="{item.brightness}" id="brightness" name="brightness" type="range" onchange="submit()">
+						<input class="custom-range" value="{item.brightness}" id="brightness" name="brightness" type="range" onchange="submit()">
 					</form>
 				</td>
 			</tr>
@@ -30,7 +30,23 @@
 		<tr>
 			<td class="fit">
 				<form action="/lightoptions/{item.id}/temperature" method="POST" up-target=".container">
-					<input class="form-control-range" value="{item.colorTemperature}" name="temperature" min="2700" max="6500" type="range" onchange="submit()">
+					<input class="custom-range" value="{item.colorTemperature}" id="color_temp", name="temperature" min="2700" max="6500" type="range" onchange="submit()">
+				</form>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+	<table class="table table-striped table-bordered">
+		<thead>
+		<tr>
+			<th scope="col">Color</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td class="fit">
+				<form action="/lightoptions/{item.id}/color" method="POST" up-target=".container">
+					<input class="custom-range" value="{item.colorHue}" id="color", name="color" min="0" max="360" type="range" onchange="submit()">
 				</form>
 			</td>
 		</tr>
@@ -38,3 +54,18 @@
 	</table>
 </body>
 </html>
+<style>
+.custom-range::-webkit-slider-thumb {
+  background: gray;
+}
+#brightness::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, rgb(60,60,60), white);
+}
+#color_temp::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, rgb(255,200,0), white);
+}
+#color::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, hsl(0, 100%, 50%), hsl(60, 100%, 50%), hsl(120, 100%, 50%), hsl(180, 100%, 50%), hsl(240, 100%, 50%), hsl(300, 100%, 50%), hsl(360, 100%, 50%));
+}
+
+</style>

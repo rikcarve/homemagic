@@ -13,8 +13,10 @@ public class LightSwitch {
     private int port;
     boolean isDimmable;
     boolean isTemperature;
+    boolean isRGB;
     private int brightness;
     private int colorTemperature;
+    private int colorHue;
     private SwitchController controller;
 
     public void switchPower() {
@@ -27,6 +29,10 @@ public class LightSwitch {
 
     public void switchColorTemperature() {
         controller.setColorTemperature(this);
+    }
+
+    public void switchColorHue() {
+        controller.setColorHue(this);
     }
 
     public void readState() {
