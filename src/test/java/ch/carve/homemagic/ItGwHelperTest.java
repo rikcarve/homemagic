@@ -2,6 +2,9 @@ package ch.carve.homemagic;
 
 import org.junit.jupiter.api.Test;
 
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ItGwHelperTest {
@@ -12,5 +15,19 @@ class ItGwHelperTest {
     void testCreateMessage_on() {
         assertEquals(MSG_ON, ItGwHelper.createMessage("A2", Action.ON));
         assertEquals(MSG_OFF, ItGwHelper.createMessage("A2", Action.OFF));
+    }
+
+    @Test
+    void testJsonString() {
+        String power = "20";
+        JsonObject jsonObject = Json.createObjectBuilder()
+                .add("id", 1)
+                .add("method", "set_power")
+                .add("params", Json.createArrayBuilder()
+                        .add(power)
+                        .add("sudden")
+                        .add(500))
+                .build();
+        System.out.println(jsonObject.toString());
     }
 }

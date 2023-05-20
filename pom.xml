@@ -11,12 +11,15 @@
         <surefire-plugin.version>2.22.1</surefire-plugin.version>
         <java.version>17</java.version>
         <maven.compiler.release>17</maven.compiler.release>
-        <quarkus.version>2.13.3.Final</quarkus.version>
+        <quarkus.version>3.0.3.Final</quarkus.version>
         <influxdb.version>6.4.0</influxdb.version>
         <fabric8.maven.plugin.version>4.3.1</fabric8.maven.plugin.version>
         <docker.file>Dockerfile.jvm</docker.file>
         <docker.platform>linux/amd64</docker.platform>
         <docker.image.name>rikcarve/homemagic</docker.image.name>
+
+        <jkube.createExternalUrls>true</jkube.createExternalUrls>
+
         <!-- <project.build.sourceEncoding>windows-1251</project.build.sourceEncoding> -->
     </properties>
     <dependencyManagement>
@@ -55,10 +58,6 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-elytron-security-properties-file</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-smallrye-opentracing</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>com.influxdb</groupId>
@@ -83,13 +82,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!--
-        <dependency>
-            <groupId>io.smallrye.config</groupId>
-            <artifactId>smallrye-config-source-consul</artifactId>
-            <version>1.9.0-SNAPSHOT</version>
-        </dependency>
--->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit5</artifactId>
@@ -136,13 +128,17 @@
                     </execution>
                 </executions>
             </plugin>
-
+            <plugin>
+                <groupId>org.eclipse.jkube</groupId>
+                <artifactId>kubernetes-maven-plugin</artifactId>
+                <version>1.10.1</version>
+            </plugin>
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>0.40.2</version>
                 <configuration>
-                    <dockerHost>${my.docker.host}</dockerHost>
+                    <!--<dockerHost>${my.docker.host}</dockerHost> -->
                     <certPath>${my.docker.certs}</certPath>
 
                     <!-- <registry>192.168.91.21:15000</registry> -->

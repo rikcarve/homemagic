@@ -2,11 +2,12 @@ package ch.carve.homemagic.model;
 
 import lombok.extern.slf4j.Slf4j;
 
+import jakarta.json.Json;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
@@ -14,7 +15,16 @@ public class YeelightController implements SwitchController {
     @Override
     public void setPower(LightSwitch lightSwitch) {
         String power = lightSwitch.getStatus().toLowerCase();
-        String msg = "{\"id\":1,\"method\":\"set_power\",\"params\":[\"" + power + "\", \"sudden\", 500]}";
+        String msg = Json.createObjectBuilder()
+                .add("id", 1)
+                .add("method", "set_power")
+                .add("params", Json.createArrayBuilder()
+                        .add(power)
+                        .add("sudden")
+                        .add(500))
+                .build()
+                .toString();
+
         sendMessage(msg, lightSwitch.getIp(), lightSwitch.getPort());
     }
 
@@ -28,6 +38,11 @@ public class YeelightController implements SwitchController {
     public void setColorTemperature(LightSwitch lightSwitch) {
         String msg = "{\"id\":1,\"method\":\"set_ct_abx\",\"params\":[" + lightSwitch.getColorTemperature() + ", \"sudden\", 500]}";
         sendMessage(msg, lightSwitch.getIp(), lightSwitch.getPort());
+    }
+
+    @Override
+    public void setColorHue(LightSwitch lightSwitch) {
+        throw new UnsupportedOperationException("Not supported on Yeelight controller");
     }
 
     @Override

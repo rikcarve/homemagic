@@ -22,6 +22,11 @@ public class IntertechnoController implements SwitchController {
     }
 
     @Override
+    public void setColorHue(LightSwitch lightSwitch) {
+        throw new UnsupportedOperationException("Not supported on Intertechno gateway");
+    }
+
+    @Override
     public void getState(LightSwitch lightSwitch) {
     }
 }

@@ -1,10 +1,9 @@
 package ch.carve.homemagic;
 
 import ch.carve.homemagic.model.*;
-import org.eclipse.microprofile.opentracing.Traced;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.ApplicationScoped;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -74,7 +73,6 @@ public class LightService {
         return lights.values();
     }
 
-    @Traced
     public void toggle(String id, String status) {
         LightSwitch lightSwitch = get(id);
         lightSwitch.setStatus(status);

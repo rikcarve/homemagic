@@ -23,6 +23,11 @@ public class WizController implements SwitchController {
     }
 
     @Override
+    public void setColorHue(LightSwitch lightSwitch) {
+        throw new UnsupportedOperationException("Not supported on Wiz controller");
+    }
+
+    @Override
     public void getState(LightSwitch lightSwitch) {
         // not implemented yet
     }

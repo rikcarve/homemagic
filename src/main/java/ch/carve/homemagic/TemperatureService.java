@@ -8,15 +8,14 @@ import com.influxdb.query.dsl.Flux;
 import com.influxdb.query.dsl.functions.restriction.Restrictions;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import jakarta.enterprise.context.ApplicationScoped;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -41,9 +40,9 @@ public class TemperatureService {
         influxDBClient.close();
     }
 
-    public List<Temperature> getLastHours(long hours, long interval) {
+    public List<Temperature> getLastHours(long hours, long interval, String sensor) {
         var restriction = Restrictions.and(
-                Restrictions.column("topic").equal("zigbee2mqtt/temperature1"),
+                Restrictions.column("topic").equal("zigbee2mqtt/" + sensor),
                 Restrictions.field().equal("temperature")
         );
         String flux = Flux.from("zigbee")

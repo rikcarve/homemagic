@@ -3,7 +3,7 @@
 <html>
 <body>
 	{#include navigation.html}{/include}
-	<table class="charts-css column data-spacing-4 show-labels" id="my-chart">
+	<table class="charts-css column data-spacing-4 show-labels" id="my-chart1">
 		<thead>
 			<tr>
 				<th scope="col">Time</th>
@@ -11,7 +11,23 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#for item in temperature}
+			{#for item in temperature1}
+			<tr>
+				<th>{item.timeString}</th>
+				<td style="--size: calc({item.temperature}/40)">{item.temperature}</td>
+			</tr>
+			{/for}
+		</tbody>
+	</table>
+	<table class="charts-css column data-spacing-4 show-labels" id="my-chart2">
+		<thead>
+			<tr>
+				<th scope="col">Time</th>
+				<th scope="col">Temperature</th>
+			</tr>
+		</thead>
+		<tbody>
+			{#for item in temperature2}
 			<tr>
 				<th>{item.timeString}</th>
 				<td style="--size: calc({item.temperature}/40)">{item.temperature}</td>
@@ -22,10 +38,17 @@
 </body>
 </html>
 <style>
-#my-chart.column {
+#my-chart1.column {
   height: 200px;
   max-width: 300px;
   margin: 0 auto;
   --color: rgba(130, 130, 130, 0.5);;
 }
+#my-chart2.column {
+  height: 200px;
+  max-width: 300px;
+  margin: 0 auto;
+  --color: rgba(130, 130, 130, 0.5);;
+}
+
 </style>
