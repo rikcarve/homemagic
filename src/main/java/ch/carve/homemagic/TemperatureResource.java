@@ -3,6 +3,7 @@ package ch.carve.homemagic;
 import ch.carve.homemagic.model.Temperature;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
+import io.smallrye.common.annotation.RunOnVirtualThread;
 import lombok.extern.slf4j.Slf4j;
 
 import jakarta.annotation.security.RolesAllowed;
@@ -26,6 +27,7 @@ public class TemperatureResource {
 
     @GET
     @RolesAllowed("user")
+    @RunOnVirtualThread
     public TemplateInstance get() {
         List<Temperature> temps1 = temperatureService.getLastHours(24L, 4L, "temperature1");
         List<Temperature> temps2 = temperatureService.getLastHours(24L, 4L, "temperature2");

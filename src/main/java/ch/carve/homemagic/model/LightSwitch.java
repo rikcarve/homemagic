@@ -11,6 +11,7 @@ public class LightSwitch {
     private String status;
     private String ip;
     private int port;
+    private int remoteId;
     boolean isDimmable;
     boolean isTemperature;
     boolean isColor;

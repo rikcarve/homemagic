@@ -17,6 +17,8 @@ public class LightService {
 
     private Map<String, LightSwitch> lights = new HashMap<>();
 
+    private Map<Integer, LightSwitch> remoteMap = new HashMap<>();
+
     @PostConstruct
     public void init() {
         lights.put("B3", LightSwitch.builder()
@@ -33,6 +35,7 @@ public class LightService {
                 .status("OFF")
                 .ip("192.168.178.34")
                 .port(38899)
+                .remoteId(3)
                 .brightness(100)
                 .colorTemperature(3000)
                 .isDimmable(true)
@@ -45,6 +48,7 @@ public class LightService {
                 .status("OFF")
                 .ip("192.168.178.33")
                 .port(55443)
+                .remoteId(1)
                 .brightness(100)
                 .colorTemperature(3000)
                 .isDimmable(true)
@@ -55,6 +59,7 @@ public class LightService {
                 .id("workplaceRGB")
                 .name("Arbeitsplatz")
                 .ip("tcp://berry2:1883")
+                .remoteId(2)
                 .status("OFF")
                 .brightness(100)
                 .colorTemperature(3000)

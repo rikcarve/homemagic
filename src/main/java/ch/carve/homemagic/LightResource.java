@@ -3,6 +3,7 @@ package ch.carve.homemagic;
 import ch.carve.homemagic.model.LightSwitch;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
+import io.smallrye.common.annotation.RunOnVirtualThread;
 import lombok.extern.slf4j.Slf4j;
 
 import jakarta.annotation.security.RolesAllowed;
@@ -26,6 +27,7 @@ public class LightResource {
 
     @GET
     @RolesAllowed("user")
+    @RunOnVirtualThread
     public TemplateInstance get() {
         Collection<LightSwitch> data = lightService.getList();
         return light.data("light", data)
@@ -35,6 +37,7 @@ public class LightResource {
     @POST
     @RolesAllowed("user")
     @Path("/{id}/toggle/{status}")
+    @RunOnVirtualThread
     public Response toggle(@PathParam("id") String id, @PathParam("status") String status) {
         log.info("toggle {}, old status {}", id, status);
         lightService.toggle(id, "OFF".equals(status) ? "ON" : "OFF");

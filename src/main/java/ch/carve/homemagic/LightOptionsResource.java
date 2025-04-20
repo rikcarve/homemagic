@@ -3,6 +3,7 @@ package ch.carve.homemagic;
 import ch.carve.homemagic.model.LightSwitch;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
+import io.smallrye.common.annotation.RunOnVirtualThread;
 import lombok.extern.slf4j.Slf4j;
 
 import jakarta.annotation.security.RolesAllowed;
@@ -27,6 +28,7 @@ public class LightOptionsResource {
     @GET
     @RolesAllowed("user")
     @Path("/{id}")
+    @RunOnVirtualThread
     public TemplateInstance get(@PathParam("id") String id) {
         LightSwitch data = lightService.get(id);
         return lightoptions.data("item", data)
@@ -37,6 +39,7 @@ public class LightOptionsResource {
     @RolesAllowed("user")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("/{id}/brightness")
+    @RunOnVirtualThread
     public Response brightness(@PathParam("id") String id, @FormParam("brightness") int brightness) {
         log.info("set brightness {} for {}",  brightness, id);
         LightSwitch lightSwitch = lightService.get(id);
@@ -51,6 +54,7 @@ public class LightOptionsResource {
     @RolesAllowed("user")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("/{id}/temperature")
+    @RunOnVirtualThread
     public Response temperature(@PathParam("id") String id, @FormParam("temperature") int temperature) {
         log.info("set temperature {} for {}",  temperature, id);
         LightSwitch lightSwitch = lightService.get(id);
@@ -65,6 +69,7 @@ public class LightOptionsResource {
     @RolesAllowed("user")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("/{id}/color")
+    @RunOnVirtualThread
     public Response color(@PathParam("id") String id, @FormParam("color") int color) {
         log.info("set color {} for {}",  color, id);
         LightSwitch lightSwitch = lightService.get(id);

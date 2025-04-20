@@ -45,6 +45,7 @@ public class FlairViyuController implements SwitchController {
     private void sendMessage(String message, String uri, String topic) {
         String publisherId = MqttClient.generateClientId();
         log.info(message);
+
         try {
             IMqttClient mqttClient = new MqttClient(uri, publisherId, new MemoryPersistence());
             MqttConnectOptions options = new MqttConnectOptions();

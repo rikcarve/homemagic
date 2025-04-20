@@ -8,11 +8,11 @@
     <artifactId>homemagic</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
-        <surefire-plugin.version>2.22.1</surefire-plugin.version>
-        <java.version>17</java.version>
-        <maven.compiler.release>17</maven.compiler.release>
-        <quarkus.version>3.0.3.Final</quarkus.version>
-        <influxdb.version>6.4.0</influxdb.version>
+        <surefire-plugin.version>3.5.2</surefire-plugin.version>
+        <java.version>21</java.version>
+        <maven.compiler.release>21</maven.compiler.release>
+        <quarkus.version>3.20.0</quarkus.version>
+        <influxdb.version>6.12.0</influxdb.version>
         <fabric8.maven.plugin.version>4.3.1</fabric8.maven.plugin.version>
         <docker.file>Dockerfile.jvm</docker.file>
         <docker.platform>linux/amd64</docker.platform>
@@ -40,7 +40,7 @@
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-rest-client</artifactId>
+            <artifactId>quarkus-resteasy-client</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -57,6 +57,10 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-elytron-security-properties-file</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-messaging-mqtt</artifactId>
         </dependency>
 
         <dependency>
@@ -78,7 +82,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.22</version>
+            <version>1.18.32</version>
             <scope>provided</scope>
         </dependency>
 
@@ -90,13 +94,18 @@
         <dependency>
         	<groupId>org.mockito</groupId>
         	<artifactId>mockito-junit-jupiter</artifactId>
-        	<version>4.4.0</version>
+        	<version>5.16.1</version>
         	<scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-container-image-docker</artifactId>
         </dependency>
     </dependencies>
     <build>
@@ -105,7 +114,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
+                <version>3.14.0</version>
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -136,7 +145,7 @@
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>0.40.2</version>
+                <version>0.44.0</version>
                 <configuration>
                     <!--<dockerHost>${my.docker.host}</dockerHost> -->
                     <certPath>${my.docker.certs}</certPath>
@@ -202,7 +211,7 @@
         <profile>
             <id>arm64</id>
             <properties>
-                <docker.platform>linux/arm64</docker.platform>
+                <docker.platform>linux/arm64/v8</docker.platform>
                 <docker.file>Dockerfile.arm64</docker.file>
                 <docker.image.name>berry2.fritz.box:5000/homemagic-arm64</docker.image.name>
             </properties>

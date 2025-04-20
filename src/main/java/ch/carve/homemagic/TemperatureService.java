@@ -56,7 +56,7 @@ public class TemperatureService {
         return query.stream().flatMap(fluxTable -> fluxTable.getRecords().stream())
                 .filter(r -> r.getValue() != null)
 
-                .peek(r -> System.out.println(r.getTime() + "   " + formatter.format(r.getTime()) + ": " + r.getValue()))
+                .peek(r -> log.info(r.getTime() + "   " + formatter.format(r.getTime()) + ": " + r.getValue()))
                 .map(r -> new Temperature(r.getTime(), formatter.format(r.getTime()), String.format("%.1f",r.getValue()))).collect(Collectors.toList());
     }
 }
