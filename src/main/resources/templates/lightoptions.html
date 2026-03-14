@@ -5,7 +5,7 @@
 <body>
 	{#include navigation.html}{/include}
 	<table class="table table-striped table-bordered">
-		<thead>
+		<thead style="background-color: #007bff; color: white;">
 			<tr>
 				<th scope="col">Brightness</th>
 			</tr>
@@ -21,7 +21,7 @@
 		</tbody>
 	</table>
 	<table class="table table-striped table-bordered">
-		<thead>
+		<thead style="background-color: #007bff; color: white;">
 		<tr>
 			<th scope="col">Color Temperature</th>
 		</tr>
@@ -38,7 +38,7 @@
 	</table>
 	{#if item.isColor == true}
 	<table class="table table-striped table-bordered">
-		<thead>
+		<thead style="background-color: #007bff; color: white;">
 		<tr>
 			<th scope="col">Color</th>
 		</tr>
@@ -58,7 +58,7 @@
 </html>
 <style>
 .custom-range::-webkit-slider-thumb {
-  background: gray;
+  background: #007bff;
 }
 #brightness::-webkit-slider-runnable-track {
   background: linear-gradient(to right, rgb(60,60,60), white);
