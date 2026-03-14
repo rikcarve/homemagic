@@ -4,7 +4,7 @@
 <body>
 	{#include navigation.html}{/include}
 	<table class="table table-striped table-bordered">
-		<thead>
+		<thead style="background-color: #007bff; color: white;">
 			<tr>
 				<th scope="col">Name</th>
 				<th scope="col">Options</th>
@@ -18,13 +18,13 @@
 				<td class="fit" width="15%">
 					{#if item.isDimmable == true}
 					<form action="/lightoptions/{item.id}">
-						<input class="btn btn-outline-info" value="Options" type="submit">
+						<input class="btn btn-primary" value="Options" type="submit">
 					</form>
 					{/if}
 				</td>
 				<td class="fit" width="15%">
 					<form action="/light/{item.id}/toggle/{item.status}" method="POST" name="toggle-{item.id}" up-target=".container">
-						<input class="btn btn-dark" value="{item.status}" type="submit">
+						<input class="btn btn-warning" value="{item.status}" type="submit">
 					</form>
 				</td>
 			</tr>
