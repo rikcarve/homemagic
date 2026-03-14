@@ -8,7 +8,7 @@
     <artifactId>homemagic</artifactId>
     <version>1.1-SNAPSHOT</version>
     <properties>
-        <surefire-plugin.version>3.5.4</surefire-plugin.version>
+        <surefire-plugin.version>3.5.5</surefire-plugin.version>
         <java.version>25</java.version>
         <maven.compiler.release>25</maven.compiler.release>
         <quarkus.version>3.27.1</quarkus.version>
