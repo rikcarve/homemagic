@@ -12,7 +12,7 @@
         <java.version>25</java.version>
         <maven.compiler.release>25</maven.compiler.release>
         <quarkus.version>3.34.5</quarkus.version>
-        <influxdb.version>7.5.0</influxdb.version>
+        <influxdb.version>8.0.0</influxdb.version>
         <fabric8.maven.plugin.version>4.3.1</fabric8.maven.plugin.version>
         <docker.file>Dockerfile.jvm</docker.file>
         <docker.platform>linux/amd64</docker.platform>
