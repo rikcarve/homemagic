@@ -10,10 +10,17 @@ import jakarta.ws.rs.core.Response;
 @Path("dummy")
 public class DummyResource {
     @GET
+    @Path("delay")
     public Response delay() throws InterruptedException {
         log.info("get delay");
         Thread.sleep(200);
         return Response.ok("OK").build();
+    }
+
+    @GET
+    public Response hello() {
+        log.info("hello");
+        return Response.ok("world").build();
     }
 
 }
